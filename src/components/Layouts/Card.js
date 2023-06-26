@@ -46,8 +46,8 @@ const Card = (props) => {
             return meal + ",";
           })}
         </p>
-      </MDBCardBody>
-      <div className="row">
+
+        <div className="row" prices_contatiner>
         <div className="col-md-4 right price_label">
           <p>Medium</p>
         </div>
@@ -62,7 +62,7 @@ const Card = (props) => {
           ></MealAmountController>
         </div>
       </div>
-      <div className="row">
+      <div className="row prices_contatiner">
         <div className="col-md-4 right price_label">
           <p>Large</p>
         </div>
@@ -76,9 +76,11 @@ const Card = (props) => {
           ></MealAmountController>
         </div>
       </div>
-      <MDBCardBody>
-        <div className="row">
-          <div className="col-md-10 right">Add To Cart</div>
+
+      <div className="row">
+          <div className="col-md-10 right">
+          <button type="button" class="btn btn-warning">Checkout</button>
+          </div>
           <div className="col-md-2 ">
             <MDBIcon
               fas
@@ -88,6 +90,7 @@ const Card = (props) => {
             />
           </div>
         </div>
+        
       </MDBCardBody>
     </MDBCard>
   );
