@@ -13,12 +13,26 @@ import {
 } from "mdb-react-ui-kit";
 import "./CartModel.css";
 import Model from "./Model";
+import CartContext from "../../store/Cart-Context";
+import MealAmountController from "../UI/MealAmountController";
 
 const CartModel = (props) => {
-    
+  debugger;
+   const contextCart = React.useContext(CartContext);
+   const numberOfItems = contextCart.items.length;
+  
+   
+
     const hideCartHandler = () => {
         props.hideCartHandler();
     }
+
+    const updateParent = (item,counter) => {
+      item.amount = counter;
+      contextCart.editItemFromCart(item);
+    
+    }
+
   return (
     <Model>
       <MDBContainer className="py-5 h-100">
@@ -39,8 +53,7 @@ const CartModel = (props) => {
 
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <div>
-                        <p className="mb-1">Shopping cart</p>
-                        <p className="mb-0">You have 4 items in your cart</p>
+                        <p className="mb-0">You have {numberOfItems} items in your cart</p>
                       </div>
                       <div>
                         <p>
@@ -52,50 +65,48 @@ const CartModel = (props) => {
                         </p>
                       </div>
                     </div>
-
-                    <MDBCard className="mb-3">
+                    {contextCart.items.map((cartItem)=>{
+                   
+                        return (
+                          <MDBCard className="mb-3" key={cartItem.id}>
                       <MDBCardBody>
-                        <div className="d-flex justify-content-between">
-                          <div className="d-flex flex-row align-items-center">
-                            <div>
-                              <MDBCardImage
-                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img4.webp"
-                                fluid
-                                className="rounded-3"
-                                style={{ width: "65px" }}
-                                alt="Shopping item"
-                              />
-                            </div>
-                            <div className="ms-3">
-                              <MDBTypography tag="h5">
-                                MacBook Pro
-                              </MDBTypography>
-                              <p className="small mb-0">1TB, Graphite</p>
-                            </div>
+                         <div className="row">
+                          <div className="col-md-2">
+                            <img src={ cartItem.item.src}  className="shopping-cart_img"></img>
+                            
                           </div>
-                          <div className="d-flex flex-row align-items-center">
-                            <div style={{ width: "50px" }}>
-                              <MDBTypography
-                                tag="h5"
-                                className="fw-normal mb-0"
-                              >
-                                1
-                              </MDBTypography>
-                            </div>
-                            <div style={{ width: "80px" }}>
-                              <MDBTypography tag="h5" className="mb-0">
-                                $1799
-                              </MDBTypography>
-                            </div>
+                          <div className="col-md-3">
+                          <p>{cartItem.item.name}</p>
+                          </div>
+                          <div className="col-md-2">
+                          <MealAmountController
+                              updateParent={updateParent}
+                              counter={cartItem.amount}
+                              type={cartItem}
+                            ></MealAmountController>
+                          </div>
+                          <div className="col-md-2">
+                          $
+                            {
+                              (cartItem.amount)*(cartItem.item.prices)
+                            }
+                             
+                          </div>
+                          <div className="col-md-1">
                             <a href="#!" style={{ color: "#cecece" }}>
                               <MDBIcon fas icon="trash-alt" />
                             </a>
                           </div>
-                        </div>
+                         </div>
+                          
+                         
                       </MDBCardBody>
                     </MDBCard>
+                        )
+                    })}
+                    
                   </MDBCol>
-
+                  
                   <MDBCol lg="5">
                     <MDBCard className="bg-primary text-white rounded-3">
                       <MDBCardBody>

@@ -13,19 +13,25 @@ import {
 import "./MealAmountController.css"
 const MealAmountController = (props) => {
 
-    const [counter,setCounter] = React.useState(0);
+   const amount = props.counter;
+   const [counter,setCounter] = React.useState(amount);
 
 
     const increment = (event) => {
         handleButtonClick(event)
-        setCounter(counter + 1);
-        props.updateParent(props.type,counter);
+        const newCount =counter + 1
+        setCounter(newCount);
+        props.updateParent(props.type,newCount);
     }
 
     const decrement = (event) => {
+      debugger;
         handleButtonClick(event);
-        counter > 0 ? setCounter(counter - 1):setCounter(counter);
-        props.updateParent(props.type,counter);
+        const newCounter = counter - 1
+        counter > 0 ? setCounter(newCounter):setCounter(counter);
+        if (newCounter >= 0){
+          props.updateParent(props.type,newCounter);
+        }
     }
 
     const handleButtonClick = (event) => {
