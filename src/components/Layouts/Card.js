@@ -14,6 +14,10 @@ import "./Card.css";
 import MealAmountController from "../UI/MealAmountController";
 
 const Card = (props) => {
+
+  const  onShowCartHandler = (event) => {
+    props.onShowCartHandler(event);
+  }
   const MEDIUM = "medium";
   const LARGE = "large";
   const updateMealAmounts = (type, counter) => {
@@ -79,7 +83,7 @@ const Card = (props) => {
 
       <div className="row">
           <div className="col-md-10 right">
-          <button type="button" class="btn btn-warning">Checkout</button>
+          <button type="button" class="btn btn-warning" onClick={onShowCartHandler}>Checkout</button>
           </div>
           <div className="col-md-2 ">
             <MDBIcon

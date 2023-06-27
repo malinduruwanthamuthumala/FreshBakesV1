@@ -51,5 +51,5 @@ margin-top: 10px;
 .navbar_custom{
     background-color: rgba(20, 20, 20, 0.468);
     margin-top: -450px;
-  
+    z-index: 200;
 }

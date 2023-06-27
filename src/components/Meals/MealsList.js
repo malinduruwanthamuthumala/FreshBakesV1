@@ -1,10 +1,15 @@
 import React from "react";
 import AvailableMeals from "./AvailableMeals";
 
-const MealsList = () => {
+const MealsList = (props) => {
+
+    const onShowCartHandler = () => {
+     props.onShowCartHandler()
+    }
+
     return(
         <React.Fragment>
-            <AvailableMeals></AvailableMeals>
+            <AvailableMeals onShowCartHandler={onShowCartHandler}></AvailableMeals>
         </React.Fragment>
     );
 }

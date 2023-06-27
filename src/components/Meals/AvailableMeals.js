@@ -86,10 +86,13 @@ const DUMMY_MEALS = [
     src:image9}]
  
 
-const AvailableMeals = () => {
+const AvailableMeals = (props) => {
+  const onShowCartHandler = (event) => {
+    props.onShowCartHandler()
+  }
 
     const mealsList= DUMMY_MEALS.map(meals => {
-        return (<div className="col-md-3 card_meal"><Card key={meals.id} src={meals.src} prices={meals.prices} name={meals.name} description={meals.description} incredients={meals.ingredients}></Card></div>);
+        return (<div className="col-md-3 card_meal"><Card key={meals.id} src={meals.src} prices={meals.prices} name={meals.name} description={meals.description} incredients={meals.ingredients} onShowCartHandler={onShowCartHandler}></Card></div>);
     })
     return(
         <React.Fragment>
