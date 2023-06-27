@@ -36,6 +36,18 @@ const  cartReducer = (state,action) => {
             total_amount:newTotalAmount,
         }
     }
+
+    if (action.type=="REMOVE"){
+        const filteredItems = state.items.filter((items) => {
+             return items.id != action.item.id ;
+          });
+        const updatedItems = filteredItems;
+        const newTotalAmount = state.total_amount + action.item.price * action.item.amount;
+        return {
+            items:updatedItems,
+            total_amount:newTotalAmount,
+        }
+    }
     return defaultCartState;
 }
 const CardProvider = (props) => {
@@ -48,10 +60,10 @@ const CardProvider = (props) => {
         });
     }
 
-    const removeItemFromCart = (id) => {
+    const removeItemFromCart = (item) => {
         dispatchCartAction({
             type:'REMOVE',
-            id:id,
+            item:item,
         });
     }
 

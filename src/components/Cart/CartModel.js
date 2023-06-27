@@ -33,6 +33,11 @@ const CartModel = (props) => {
     
     }
 
+    const removeItem = (item) => {
+      debugger
+      contextCart.removeItem(item);
+    }
+
   return (
     <Model>
       <MDBContainer className="py-5 h-100">
@@ -94,7 +99,7 @@ const CartModel = (props) => {
                           </div>
                           <div className="col-md-1">
                             <a href="#!" style={{ color: "#cecece" }}>
-                              <MDBIcon fas icon="trash-alt" />
+                              <MDBIcon fas icon="trash-alt"  onClick={()=>removeItem(cartItem)}/>
                             </a>
                           </div>
                          </div>
