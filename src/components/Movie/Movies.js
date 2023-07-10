@@ -10,7 +10,7 @@ import {
   MDBRipple,
 } from "mdb-react-ui-kit";
 import Loading from "../Layouts/Loading";
-
+import AddMovie from "./AddMovie";
 
 const Movies = () => {
 
@@ -35,15 +35,34 @@ const [isLoading,setIsLoading]=React.useState(false);
  },[]);
 
  const  fetchMovieHandlerAsync=React.useCallback(async() => {
-    setIsLoading(true);
-    const response = await fetch('https://swapi.dev/api/films');
-    const data = await response.json();
-    const movies = data.results;
-    setMovies(movies);
-    setIsLoading(false)
+    try{
+        debugger;
+        setIsLoading(true);
+        const response = await fetch('https://moviebuzz-c9305-default-rtdb.firebaseio.com/films.json');
+        const data = await response.json();
+       
+        const movies = [];
+
+        for(const key in data){
+            movies.push({
+                id:key,
+                title:data[key].title,
+                opening_crawl:data[key].opening_crawl,
+                release_date:data[key].release_date,
+
+            })
+        }
+        setMovies(movies);
+        setIsLoading(false)
+    } catch {
+        console.log("no data");
+        setIsLoading(false);
+    }
+   
  },[]);
   return (
     <React.Fragment>
+
         <div className="row" >
         <button onClick={fetchMovieHandlerAsync}>fetch Movies</button>
         </div>
@@ -52,6 +71,13 @@ const [isLoading,setIsLoading]=React.useState(false);
        
        
         <div className="container row">
+
+
+        <div className="row">
+            <AddMovie></AddMovie>
+        </div>
+
+
         {!isLoading && movies.map((movie) => {
         return (
           <div key={movie.id} className="col-md-3">
