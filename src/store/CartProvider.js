@@ -71,7 +71,6 @@ const CardProvider = (props) => {
         dispatchCartAction({
             type:'EDIT',
             item:item,
-
         });
     }
     const cartContext = {
