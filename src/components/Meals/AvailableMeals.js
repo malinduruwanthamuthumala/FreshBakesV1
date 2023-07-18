@@ -91,14 +91,60 @@ const AvailableMeals = (props) => {
     props.onShowCartHandler()
   }
 
-    const mealsList= DUMMY_MEALS.map(meals => {
-        return (<div className="col-md-3 card_meal"><Card key={meals.id} src={meals.src} prices={meals.prices} name={meals.name} description={meals.description} incredients={meals.ingredients} onShowCartHandler={onShowCartHandler}></Card></div>);
+  const [meals,setMeals] = React.useState([]);
+  React.useEffect( () => {
+    
+    const fetchMeals = async () => {
+      setIsLoading(true);
+      const meals = await fetch("https://foodorderapp-3ae19-default-rtdb.firebaseio.com/meals.json");
+      const response = await meals.json();
+      
+      const mealsListFromDB = [];
+      for(const key in  response){
+        mealsListFromDB.push(
+          {
+            id: key,
+            name:response[key].name ,
+            description: response[key].description,
+            prices: response[key].prices,
+            ingredients: response[key].ingredients,
+            src:response[key].src
+          }
+          
+        )
+
+        
+      }
+      setMeals(mealsListFromDB) ;
+      setIsLoading(false);
+      
+      
+    }
+
+    try {
+      fetchMeals();
+    } catch {
+      setIsLoading(false);
+    }
+    
+    
+  } , []
+    
+    
+  );
+    const [isLoading,setIsLoading] = React.useState(false);
+    const mealsList= meals.map(meals => {
+     
+        return (<div className="col-md-3 card_meal"><Card key={meals.id} src={meals.src} prices={meals.prices} name={meals.name} description={meals.description} ingredients={meals.ingredients} onShowCartHandler={onShowCartHandler}></Card></div>);
     })
     return(
         <React.Fragment>
+            <div classname="loading_screen">
+              {isLoading && <p>Loading ...</p>}
             <div className="row container-fluid">
                 {mealsList}
                 
+            </div>
             </div>
         </React.Fragment>
     );

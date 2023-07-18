@@ -99,7 +99,7 @@ const Card = (props) => {
           {props.description}
         </MDBCardText>
         <p className="left ingredients">
-          {props.incredients.map((meal) => {
+          {props.ingredients.map((meal) => {
             return meal + ",";
           })}
         </p>
